@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "451901549739",
+    "project_id": "fhossain6-fanpage",
+    "storage_bucket": "fhossain6-fanpage.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451901549739:android:0dadf691b1d86a10a05bee",
+        "android_client_info": {
+          "package_name": "com.fameda.fanpage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "451901549739-h4vpjspitn2ttnalfa3t51daonj1r5g1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZs7TBbwaaH40rdPpczvj9Q-mg_DARBl0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "451901549739-h4vpjspitn2ttnalfa3t51daonj1r5g1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
