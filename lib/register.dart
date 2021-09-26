@@ -21,6 +21,7 @@ class _RegisterPageState extends State<RegisterPage> {
       _lastnameController,
       _phonenumberController;
   final _formKey = GlobalKey<FormState>();
+  String _userCredential ="";
 
   @override
   void initState() {
@@ -47,6 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -191,20 +193,23 @@ class _RegisterPageState extends State<RegisterPage> {
       UserCredential userCredential =
       await _auth.createUserWithEmailAndPassword(
           email: _emailController.text, password: _passwordController.text);
+      setState(() {
+        _db
+            .collection("user")
+            .doc(userCredential.user!.uid)
+            .set({
+          "first_name": _firstnameController.text,
+          "last_name": _lastnameController.text,
+          "phone": _phonenumberController.text,
+          "role": "customer",
+          "register_date": DateTime.now()
+        });
 
-      _db
-          .collection("users")
-          .doc(userCredential.user!.uid)
-          .set({
-        "first_name": _firstnameController.text,
-        "last_name": _lastnameController.text,
-        "phone": _phonenumberController.text,
-        "role": "customer",
-        "register_date": DateTime.now()
-      })
+      });
 
-          .then((value) => null)
-          .onError((error, stackTrace) => null);
+
+
+
     } on FirebaseAuthException catch (e) {
       print(e);
       ScaffoldMessenger.of(context)
