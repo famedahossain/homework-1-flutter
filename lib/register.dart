@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'driver.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -48,7 +49,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +102,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   return null;
                 },
                 decoration: const InputDecoration(
-                    labelText: "ENTER PASSWOR",
+                    labelText: "ENTER PASSWORD",
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),
                     hintText: 'Enter Password'),
@@ -193,7 +193,7 @@ class _RegisterPageState extends State<RegisterPage> {
       UserCredential userCredential =
       await _auth.createUserWithEmailAndPassword(
           email: _emailController.text, password: _passwordController.text);
-      setState(() {
+      // setState(() {
         _db
             .collection("user")
             .doc(userCredential.user!.uid)
@@ -203,17 +203,16 @@ class _RegisterPageState extends State<RegisterPage> {
           "phone": _phonenumberController.text,
           "role": "customer",
           "register_date": DateTime.now()
-        });
-
-      });
-
-
-
+        })
+      // ;
+          .then((value) => null)
+          .onError((error, stackTrace) => null);
+          Navigator.pushReplacement(context,MaterialPageRoute(builder:  (con) => AppDriver()));
+      // });
 
     } on FirebaseAuthException catch (e) {
-      print(e);
       ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Something Else")));
+          .showSnackBar(const SnackBar(content: Text("Error")));
     } catch (e) {
       print(e);
     }

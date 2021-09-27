@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'admin.dart';
 import 'driver.dart';
 import 'register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -124,13 +127,20 @@ class _LoginState extends State<LoginPage> {
         ),
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton: FloatingActionButton(
+        onPressed: signOut,
+        tooltip: 'Log out',
+        child: const Icon(Icons.logout),
+      ),
     );
   }
 
   Future<void> login() async {
+    await Firebase.initializeApp();
     try {
       UserCredential _ = await _auth.signInWithEmailAndPassword(
           email: _email, password: _password);
+      roleCheck();
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (con) => AppDriver()));
     } on FirebaseAuthException catch (e) {
@@ -153,4 +163,30 @@ class _LoginState extends State<LoginPage> {
       _loading = false;
     });
   }
+
+  void roleCheck() async{
+    FirebaseFirestore.instance.collection('user').doc(_auth.currentUser!.uid).get().then((value){
+      if(value.data()!['role'] == 'ADMIN'){
+        Navigator.pushReplacement(context,MaterialPageRoute(builder:  (con) => Admin()));
+      }else{
+        Navigator.pushReplacement(context,MaterialPageRoute(builder:  (con) => AppDriver()));
+      }
+    });
+  }
+
+  void signOut() async {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    if(_auth.currentUser != null) {
+      await _auth.signOut();
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Logged out")));
+    }else{
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("No user logged in")));
+    }
+    setState(() {
+
+    });
+  }
+
 }

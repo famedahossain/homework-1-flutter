@@ -63,6 +63,7 @@ class Splash2 extends StatelessWidget {
       loadingText: Text("Loading"),
       photoSize: 200.0,
       loaderColor: Colors.blue,
+      backgroundColor: Colors.lime,
     );
   }
 }
