@@ -7,50 +7,51 @@ import 'package:flutter/material.dart';
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
-
-  @override
-  _HomePageState createState() => _HomePageState();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(HomePage());
 }
-class _HomePageState extends State<HomePage> {
 
-  List<String> messages = [];
-
-  void readMessage() async {
-    FirebaseFirestore.instance.collection('messages')
-        .get()
-        .then((value) {
-      if (value.size > 0 ) {
-        for (var element in value.docs) {
-          messages.add(element["message"]);
-        }
-      }
-    });
-    setState(() {
-
-    });
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Firebase',
+      home: AddData(),
+    );
   }
+}
 
+class AddData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lime,
-      body:
-      Container( child: ListView.builder(
-          padding: const EdgeInsets.all(8),
-          itemCount: messages.length,
-          itemBuilder: (BuildContext context, int index){
-            return Container (
-              height: 50,
-              color: Colors.white,
-              child: Center(child: Text('${messages[index]}')),
-
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: Text("Fan Page"),
+      ),
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('messages').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
             );
-
           }
 
-      ),),
+          return ListView(
+            children: snapshot.data!.docs.map((document) {
+              return Container(
+                padding: const EdgeInsets.all(8),
+                height: 60,
+                color: Colors.lime,
+                child: Center(child: Text(document['message'])),
+              );
+            }).toList(),
+          );
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           signOut(context);
@@ -59,8 +60,8 @@ class _HomePageState extends State<HomePage> {
         child: const Icon(Icons.logout),
       ),
     );
-
   }
+}
 
   void signOut(BuildContext context) async {
     ScaffoldMessenger.of(context).clearSnackBars();
@@ -70,4 +71,3 @@ class _HomePageState extends State<HomePage> {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (con) => AppDriver()));
   }
-}
