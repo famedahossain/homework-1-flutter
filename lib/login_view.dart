@@ -103,6 +103,7 @@ class _LoginState extends State<LoginPage> {
     );
 
     return Scaffold(
+      backgroundColor: Colors.blue.shade100,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

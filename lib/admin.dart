@@ -32,18 +32,29 @@ class _AdminHomeState extends State<Admin> {
         ),
 
         backgroundColor: Colors.white,
-        body: Container( child: ListView.builder(
-            padding: const EdgeInsets.all(8),
-            itemCount: messages.length,
-            itemBuilder: (BuildContext context, int index){
-              return Container (
-                height: 50,
-                color: Colors.lime,
-                child: Center(child: Text('${messages[index]}')),
+
+        body: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('messages').snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
               );
             }
 
-        ),),
+            return ListView(
+              children: snapshot.data!.docs.map((document) {
+                return Container(
+                  padding: const EdgeInsets.all(8),
+                  height: 60,
+                  color: Colors.lime,
+                  child: Center(child: Text(document['message'])),
+                );
+              }).toList(),
+            );
+          },
+        ),
+
         floatingActionButton: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
