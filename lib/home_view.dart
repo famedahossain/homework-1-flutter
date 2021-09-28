@@ -63,11 +63,27 @@ class AddData extends StatelessWidget {
   }
 }
 
-  void signOut(BuildContext context) async {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    await _auth.signOut();
-    ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('User logged out.')));
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (con) => AppDriver()));
-  }
+
+void signOut(BuildContext context) async {
+  return showDialog(context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Log Out"),
+          content: Text("Are you sure you want to log out?"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () async {
+                await _auth.signOut();
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(
+                    const SnackBar(content: Text('User logged out.')));
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (con) => AppDriver()));
+                ScaffoldMessenger.of(context).clearSnackBars();
+              },
+              child: Text("Yes"),
+            ),
+          ],
+        );
+      });
+}

@@ -70,10 +70,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   return null;
                 },
                 decoration: const InputDecoration(
-                    labelText: "EMAIL ADDRESS",
+                    labelText: "Email Address",
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    hintText: 'Enter Email'),
+                    hintText: 'Enter email address'),
               ),
               const SizedBox(height: 20.0),
               TextFormField(
@@ -86,10 +86,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   return null;
                 },
                 decoration: const InputDecoration(
-                    labelText: "RE ENTER EMAIL ADDRESS",
+                    labelText: "Re-Enter Email Address",
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    hintText: 'Re-Enter Email'),
+                    hintText: 'Re-enter email address'),
               ),
               const SizedBox(height: 20.0),
               TextFormField(
@@ -102,10 +102,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   return null;
                 },
                 decoration: const InputDecoration(
-                    labelText: "ENTER PASSWORD",
+                    labelText: "Enter Password",
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    hintText: 'Enter Password'),
+                    hintText: 'Enter password'),
               ),
               const SizedBox(height: 20.0),
               TextFormField(
@@ -118,10 +118,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   return null;
                 },
                 decoration: const InputDecoration(
-                    labelText: "VERIFY PASSWORD",
+                    labelText: "Verify Password",
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    hintText: 'Verify Password'),
+                    hintText: 'Verify password'),
               ),
               const SizedBox(height: 20.0),
               TextFormField(
@@ -134,10 +134,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   return null;
                 },
                 decoration: const InputDecoration(
-                    labelText: "Enter Firstname",
+                    labelText: "Enter First Name",
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    hintText: 'Enter Firstname'),
+                    hintText: 'Enter first name'),
               ),
               const SizedBox(height: 20.0),
               TextFormField(
@@ -145,15 +145,15 @@ class _RegisterPageState extends State<RegisterPage> {
                 controller: _lastnameController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Lastname cannot be empty';
+                    return 'Last name cannot be empty';
                   }
                   return null;
                 },
                 decoration: const InputDecoration(
-                    labelText: "Enter Lastname",
+                    labelText: "Enter Last Name",
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    hintText: 'Enter Lastname'),
+                    hintText: 'Enter last name'),
               ),
               const SizedBox(height: 20.0),
               TextFormField(
@@ -161,12 +161,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 controller: _phonenumberController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Phonenumber cannot be empty';
+                    return 'Phone number cannot be empty';
                   }
                   return null;
                 },
                 decoration: const InputDecoration(
-                    labelText: "Enter Phonenumber",
+                    labelText: "Enter Phone Number",
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),
                     hintText: 'Enter phone number'),
