@@ -6,6 +6,7 @@ import 'register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'loading.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,8 +16,11 @@ class LoginPage extends StatefulWidget {
 
 class _LoginState extends State<LoginPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _emailController, _passwordController;
+
+  get model => null;
 
   @override
   void initState() {
@@ -102,6 +106,13 @@ class _LoginState extends State<LoginPage> {
       child: const Text('Register'),
     );
 
+    final google = IconButton(
+      icon: Image.asset('assets/googleicon.png'),
+      iconSize: 30,
+      onPressed: (){
+        googleSignIn();
+      }, );
+
     return Scaffold(
       backgroundColor: Colors.blue.shade100,
       body: Center(
@@ -120,7 +131,8 @@ class _LoginState extends State<LoginPage> {
                   emailInput,
                   passwordInput,
                   submitButton,
-                  registerButton
+                  registerButton,
+                  google
                 ],
               ),
             )
@@ -188,6 +200,20 @@ class _LoginState extends State<LoginPage> {
     setState(() {
 
     });
+  }
+
+  void  googleSignIn() async {
+    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    await FirebaseAuth.instance.signInWithCredential(credential);
+
+    Navigator.pushReplacement(context,MaterialPageRoute(builder:  (con) => AppDriver()));
   }
 
 }

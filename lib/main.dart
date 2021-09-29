@@ -5,8 +5,9 @@ import 'package:splashscreen/splashscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'driver.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(App());
 }
 
